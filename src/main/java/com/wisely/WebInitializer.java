@@ -15,7 +15,7 @@ public class WebInitializer implements WebApplicationInitializer {
             throws ServletException {
             AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
             ctx.register(DemoMVCConfig.class);
-            //注册spring mvc的DispatcherServlet
+            //注册spring mvc的DispatcherServlet fgfg
             ctx.setServletContext(servletContext);
             Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
             servlet.addMapping("/");
