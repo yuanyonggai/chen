@@ -6,6 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>index.jsp is here
+<body>index.jsp is here value from inteceptor
+	处理耗时:${handlingTime}ms
+
 </body>
 </html>
