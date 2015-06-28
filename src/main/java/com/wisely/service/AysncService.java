@@ -9,9 +9,9 @@ public class AysncService {
     private DeferredResult<String> deferredResult;
 
     public DeferredResult<String> getAsyncUpdate() {
-        //deferredResult = new DeferredResult<String>();
-        //deferredResult.setResult(new Long(System.currentTimeMillis())
-        //.toString());
+        deferredResult = new DeferredResult<String>();
+        deferredResult.setResult(new Long(System.currentTimeMillis())
+        .toString());
         return deferredResult;
     }
 

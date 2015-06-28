@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div id="resp">dfdf</div>
-	<input type="button" onclick="req();" value="请1求" />
+	<input type="button" onclick="req();" value="请求" />
 	<input type="button" value="call" onclick="call();" />
 	<input type="button" value="deferred" onclick="deferred();" />
 	<script src="<c:url value="/js/jquery-2.1.4.js"/>"
