@@ -4,9 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.wisely.domain.Person;
 
 @Controller //声明为控制器bean
 @RequestMapping("/test")// 根地址为http://localhost:8080/testSpringMVC/test
@@ -64,8 +67,16 @@ public class TestController {
         return "url:"+request.getRequestURL()+" 可以访问此方法";
 
     }
+    
+    @RequestMapping("/configPath/{test}")
+    public @ResponseBody String configPath(@PathVariable String test){
+        return "request value:"+test;
+    }
 
-
+    @RequestMapping(value = "/convert", produces = { "application/x-wisely" })
+    public @ResponseBody Person convert(@RequestBody Person person) {
+        return person;
+    }
 
 
 }

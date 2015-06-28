@@ -6,19 +6,23 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import com.wisely.converters.WiselyMessageConverter;
 import com.wisely.viewresolver.JsonViewResolver;
 import com.wisely.viewresolver.PdfViewResolver;
 import com.wisely.viewresolver.XlsViewResolver;
@@ -67,12 +71,12 @@ public class DemoMVCConfig extends WebMvcConfigurerAdapter {
 	}
 
 	// 在此---配置ContentNegotiationManager,在无后缀名情况下默认为jsp view resolver
-	@Override
-	public void configureContentNegotiation(
-			ContentNegotiationConfigurer configurer) {
-		configurer.ignoreAcceptHeader(true).defaultContentType(
-				MediaType.TEXT_HTML);
-	}
+	// @Override
+	// public void configureContentNegotiation(
+	// ContentNegotiationConfigurer configurer) {
+	// configurer.ignoreAcceptHeader(true).defaultContentType(
+	// MediaType.TEXT_HTML);
+	// }
 
 	// 在此---配置ContentNegotiatingViewResolver,通过此代理到不同的viewResolover
 	@Bean
@@ -116,4 +120,39 @@ public class DemoMVCConfig extends WebMvcConfigurerAdapter {
 	ViewResolver xlsViewResolver() {
 		return new XlsViewResolver();
 	}
+
+	@Override
+	public void configurePathMatch(PathMatchConfigurer configurer) {
+		configurer.setUseSuffixPatternMatch(false);
+	}
+
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		//registry.addViewController("/mytest1").setViewName("/test");
+		registry.addViewController("/async").setViewName("/async");
+		// 添加更多
+	}
+
+	@Override
+	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+		WiselyMessageConverter converter = new WiselyMessageConverter();
+		converters.add(converter);
+	}
+
+	@Override
+	public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
+		configurer.setDefaultTimeout(30 * 1000L); // tomcat默认10秒
+		configurer.setTaskExecutor(mvcTaskExecutor());// 所借助的TaskExecutor
+	}
+
+	@Bean
+	public ThreadPoolTaskExecutor mvcTaskExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(10);
+		executor.setQueueCapacity(100);
+		executor.setMaxPoolSize(25);
+		return executor;
+
+	}
+
 }
