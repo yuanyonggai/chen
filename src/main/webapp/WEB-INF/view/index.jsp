@@ -8,6 +8,9 @@
 </head>
 <body>index.jsp is here value from inteceptor
 	处理耗时:${handlingTime}ms
-
+<form action="upload" enctype="multipart/form-data" method="post">
+    <input type="file" name="file"/><br/>
+    <input type="submit" value="上传">
+</form>
 </body>
 </html>
