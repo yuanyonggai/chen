@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.async.DeferredResult;
 
 @Service
-@EnableScheduling
+//@EnableScheduling
 public class AysncService {
     private DeferredResult<String> deferredResult;
 
