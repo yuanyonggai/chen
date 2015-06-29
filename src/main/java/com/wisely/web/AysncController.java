@@ -35,6 +35,7 @@ public class AysncController {
 	public DeferredResult<String> deferredCall() {
 		// 调用aysncService的getAsyncUpdate方法
 		// deferredResult被计划任务每五秒钟更新一次
+		System.out.println("deferredCall");
 		return aysncService.getAsyncUpdate();
 	}
 

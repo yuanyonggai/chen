@@ -35,7 +35,7 @@
 		function deferred() {
 			$.get('defer', function(data) {
 				console.log(data);
-				//deferred();//每次请求完成,再发一次请求,避免客户端定时刷新来获取数据
+				deferred();//每次请求完成,再发一次请求,避免客户端定时刷新来获取数据
 			});
 		}
 	</script>
